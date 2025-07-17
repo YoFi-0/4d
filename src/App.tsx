@@ -2,7 +2,11 @@ import './style/app.css';
 import logo from "./assets/logo.png";
 import servicsesImage from "./assets/services section image.png";
 import Mission_VisionImage from "./assets/Mission_&_Vision  image.png";
-import { useState } from 'react';
+import earthVid from "./assets/ss.mp4";
+import earthVidRev from "./assets/earth2t.mp4";
+import LandingVid from "./assets/landingBackground.mp4";
+import ServicesVid from "./assets/servicesVid.mp4";
+import { useEffect, useRef, useState } from 'react';
 
 type Lang = 'en' | 'ar';
 
@@ -109,6 +113,47 @@ interface SectionProps {
 function Landing({ lang }: SectionProps) {
   const t = translations[lang];
 
+  const video1Ref = useRef<HTMLVideoElement>(null);
+  const video2Ref = useRef<HTMLVideoElement>(null);
+
+ useEffect(() => {
+  const video1 = video1Ref.current;
+  const video2 = video2Ref.current;
+
+  if (video1 && video2) {
+    const fadeDuration = 500; // ms - must match CSS transition
+
+    const playVideo1 = () => {
+      video2.pause();
+      video2.currentTime = 0;
+      video2.style.opacity = '0';
+      video1.style.opacity = '1';
+      video1.play();
+    };
+
+    const playVideo2 = () => {
+      video1.pause();
+      video1.currentTime = 0;
+      video1.style.opacity = '0';
+      video2.style.opacity = '1';
+      video2.play();
+    };
+
+    video1.addEventListener('ended', playVideo2);
+    video2.addEventListener('ended', playVideo1);
+
+    // Initial state
+    video1.style.opacity = '1';
+    video2.style.opacity = '0';
+    video1.play();
+
+    return () => {
+      video1.removeEventListener('ended', playVideo2);
+      video2.removeEventListener('ended', playVideo1);
+    };
+  }
+}, []);
+
   return (
     <main dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       <div className="info">
@@ -117,7 +162,26 @@ function Landing({ lang }: SectionProps) {
         <button>{t.explore}</button>
       </div>
       <div className="world">
-        <div className="animation"></div>
+        <div className="animation relative w-[500px] h-[500px]">
+          <video
+            ref={video1Ref}
+            width="500"
+            height="500"
+            muted
+            style={{opacity: 0 }}
+          >
+            <source src={earthVid} type="video/mp4" />
+          </video>
+          <video
+            ref={video2Ref}
+            width="500"
+            height="500"
+            muted
+            style={{opacity: 0 }}
+          >
+            <source src={earthVidRev} type="video/mp4" />
+          </video>
+        </div>
       </div>
     </main>
   );
@@ -128,7 +192,17 @@ function Services({ lang }: SectionProps) {
 
   return (
     <section className="services" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-      <div className="animation"></div>
+      <div className="animation">
+          <video
+            autoPlay
+            loop
+            muted
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          >
+            <source src={ServicesVid} type="video/mp4" />
+          </video>
+
+      </div>
       <div className="image">
         <img src={servicsesImage} alt="services" />
       </div>
@@ -164,14 +238,58 @@ function Mission_Vision({ lang }: SectionProps) {
   );
 }
 
+
 function App() {
   const [lang, setLang] = useState<Lang>('en');
   const toggleLang = () => setLang(lang === 'en' ? 'ar' : 'en');
 
+  const [videoOpacity, setVideoOpacity] = useState(1);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const lastTimeRef = useRef<number>(0); // To track looping
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (video) {
+      const { duration, currentTime } = video;
+      const timeLeft = duration - currentTime;
+
+      // Fade out 0.8 seconds before video ends
+      if (timeLeft < 0.8 && videoOpacity !== 0) {
+        setVideoOpacity(0);
+      }
+
+      // Detect loop: if currentTime suddenly resets
+      if (currentTime < lastTimeRef.current && videoOpacity !== 1) {
+        setVideoOpacity(1);
+      }
+
+      lastTimeRef.current = currentTime;
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    setVideoOpacity(1);
+  };
+
   return (
     <>
       <div>
-        <div className="backgroundAnimation"></div>
+        <div
+          className="backgroundAnimation"
+          style={{ opacity: videoOpacity, transition: 'opacity 0.8s ease-in-out' }}
+        >
+          <video
+            autoPlay
+            loop
+            muted
+            ref={videoRef}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          >
+            <source src={LandingVid} type="video/mp4" />
+          </video>
+        </div>
         <Header lang={lang} toggleLang={toggleLang} />
         <Landing lang={lang} />
       </div>
@@ -180,5 +298,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;
