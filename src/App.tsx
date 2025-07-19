@@ -7,6 +7,7 @@ import earthVidRev from "./assets/earth2t.mp4";
 import LandingVid from "./assets/landingBackground.mp4";
 import ServicesVid from "./assets/servicesVid.mp4";
 import { useEffect, useRef, useState } from 'react';
+import { AiChat } from './components/AiChat';
 
 type Lang = 'en' | 'ar';
 
@@ -121,7 +122,6 @@ function Landing({ lang }: SectionProps) {
   const video2 = video2Ref.current;
 
   if (video1 && video2) {
-    const fadeDuration = 500; // ms - must match CSS transition
 
     const playVideo1 = () => {
       video2.pause();
@@ -295,6 +295,7 @@ function App() {
       </div>
       <Services lang={lang} />
       <Mission_Vision lang={lang} />
+      <AiChat/>
     </>
   );
 }
