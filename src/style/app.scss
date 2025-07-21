@@ -42,7 +42,7 @@ header {
         text-decoration: none;
         transition: 0.3s;
         padding: s(0.5) s(1);
-        background: #000;
+        background: transparent;
         &:hover {
           color: #000;
           background: #FFF;
@@ -133,8 +133,8 @@ main{
 }
 
 .services {
-  border-bottom: solid #eeeeee4d s(0.1);
-  border-top: solid #eeeeee4d s(0.1);
+  // border-bottom: solid #eeeeee4d s(0.1);
+  // border-top: solid #eeeeee4d s(0.1);
   overflow-x: hidden;
   position: relative;
   display: flex;

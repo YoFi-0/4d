@@ -9,9 +9,16 @@ import ServicesVid from "./assets/servicesVid.mp4";
 import { useEffect, useRef, useState } from 'react';
 import { AiChat } from './components/AiChat';
 
-type Lang = 'en' | 'ar';
+export type Lang = 'en' | 'ar';
 
-interface Translations {
+export interface AiChatTranslations {
+  header: string;
+  inputPlaceholder: string;
+  typingMessages: string[];
+  thankYouMessage: string;
+}
+
+export interface Translations {
   [key: string]: {
     about: string;
     services: string;
@@ -24,6 +31,12 @@ interface Translations {
     servicesTitle: string;
     missionVision: string;
     servicesList: string[];
+    aiChat: {
+      header: string;
+      inputPlaceholder: string;
+      typingMessages: string[];
+      thankYouMessage: string;
+    }
   };
 }
 
@@ -49,6 +62,12 @@ const translations: Translations = {
       "Web Services",
       "Hosting Websites",
     ],
+    aiChat: {
+      header: "Fordzain Client",
+      inputPlaceholder: "Type what you need...",
+      typingMessages: ["Just a second", "Hold on", "One moment"],
+      thankYouMessage: "Thank you for choosing Fordzain, we will contact you soon, God willing.",
+    },
   },
   ar: {
     about: "من نحن",
@@ -71,6 +90,12 @@ const translations: Translations = {
       "خدمات الويب",
       "استضافة المواقع",
     ],
+    aiChat: {
+      header: "عميل فوردزاين",
+      inputPlaceholder: "أكتب وش تحتاج؟ ...",
+      typingMessages: ["ثواني بس", "خلك معي", "لحظه بس"],
+      thankYouMessage: "نشكرك على إختيار فوردزاين راح نتواصل معاك في اقرب وقت إن شاء الله",
+    },
   },
 };
 
@@ -295,7 +320,7 @@ function App() {
       </div>
       <Services lang={lang} />
       <Mission_Vision lang={lang} />
-      <AiChat/>
+      <AiChat lang={lang} t={translations[lang].aiChat} />
     </>
   );
 }

@@ -15,12 +15,7 @@ class N8N_Client {
                 id:this.CreateRandomUserId(),
             })
         });
-        try {
-            JSON.parse(data.data);
-            return "نشكرك على إختيار فوردزاين راح نتواصل معاك في اقرب وقت إن شاء الله"
-        } catch (error) {
-            return data.data
-        }
+        return data.data;
     }
     private CreateRandomUserId(): string {
         if (this.userId === "") {
@@ -31,7 +26,7 @@ class N8N_Client {
             const date = new Date();
             this.userId += "_" + date.getTime().toString();
         }
-        return "1"|| this.userId;
+        return this.userId;
     }
 }
 

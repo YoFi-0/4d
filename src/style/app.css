@@ -40,7 +40,7 @@ header ul li a {
   text-decoration: none;
   transition: 0.3s;
   padding: max(0.5vw, 0.5rem) max(1vw, 1rem);
-  background: #000;
+  background: transparent;
 }
 header ul li a:hover {
   color: #000;
@@ -125,8 +125,6 @@ main .world .animation video {
 }
 
 .services {
-  border-bottom: solid rgba(238, 238, 238, 0.3019607843) max(0.1vw, 0.1rem);
-  border-top: solid rgba(238, 238, 238, 0.3019607843) max(0.1vw, 0.1rem);
   overflow-x: hidden;
   position: relative;
   display: flex;
