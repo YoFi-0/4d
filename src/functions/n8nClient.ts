@@ -2,9 +2,10 @@ import axios from "axios";
 
 class N8N_Client {
     private userId: string = "";
+
     public async SendMsg(msg: string): Promise<string> {
-        const url = "http://localhost:5678/webhook/26ef96c3-0e36-47c0-8ebe-76448fbfe3e7"
-        var data = await axios({
+        const url = "https://n8n.4d.com.sa/webhook/26ef96c3-0e36-47c0-8ebe-76448fbfe3e7";
+        const response = await axios({
             url: url,
             method: "POST",
             headers: {
@@ -12,11 +13,21 @@ class N8N_Client {
             },
             data: JSON.stringify({
                 userMsg: msg,
-                id:this.CreateRandomUserId(),
-            })
+                id: this.CreateRandomUserId(),
+            }),
         });
-        return data.data;
+
+        const rawData = response.data;
+
+        // إذا الرد يحتوي على iframe، استخرج النص من srcdoc
+        const matched = rawData.match(/srcdoc="([^"]+)"/);
+        if (matched && matched[1]) {
+            return matched[1]; // هذا النص اللي بداخل srcdoc
+        }
+
+        return rawData; // في حال ما كان فيه iframe، رجّع الرد زي ما هو
     }
+
     private CreateRandomUserId(): string {
         if (this.userId === "") {
             const numbers = "1234567890abcdefghijklmnopqrstuvwxyz";
@@ -30,4 +41,4 @@ class N8N_Client {
     }
 }
 
-export const  n8n_client = new N8N_Client();
+export const n8n_client = new N8N_Client();

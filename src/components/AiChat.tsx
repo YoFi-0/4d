@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { n8n_client } from "../functions/n8nClient";
 import mainLogo from "../assets/mainlogo.png";
 import type { Lang, AiChatTranslations } from "../App.tsx";
+import { useMainContext } from "./MainContext.tsx";
 
 interface AiChatProps {
   lang: Lang;
@@ -9,7 +10,7 @@ interface AiChatProps {
 }
 
 export function AiChat({ lang, t }: AiChatProps) {
-  const [open, setOpen] = useState(false);
+  const {open, setOpen} = useMainContext();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<
     { from: "user" | "bot"; text: string; loading?: boolean }[]

@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
     server: {
     port: 3000, // change this to your desired port
-    allowedHosts: ['www.4d.com.sa'],
+    allowedHosts: ['www.4d.com.sa', "4d.com.sa"],
   },
 })

@@ -4,6 +4,8 @@
 $buttonBackground: linear-gradient(90deg ,#5de0e6, #065674);
 $buttonBackgroundRev: linear-gradient(90deg , #065674, #5de0e6);
 
+
+
 *{
    list-style: none;
    padding: 0;
@@ -13,10 +15,20 @@ $buttonBackgroundRev: linear-gradient(90deg , #065674, #5de0e6);
 body {
   background: #000; 
   color: #FFF;
+  overflow-x: hidden;
  
 }
 button, .chat-toggle-button {
   user-select: none;
+}
+
+a {
+  color: white !important;
+  text-decoration: none;
+}
+
+button {
+  color: white !important;
 }
 
 :root {
@@ -38,13 +50,13 @@ header {
     gap: s(3);
     li{
       a{
-        color: #FFF;
+        color: #FFF !important;
         text-decoration: none;
         transition: 0.3s;
         padding: s(0.5) s(1);
         background: transparent;
         &:hover {
-          color: #000;
+          color: #000 !important;
           background: #FFF;
         }
       }
@@ -135,11 +147,12 @@ main{
 .services {
   // border-bottom: solid #eeeeee4d s(0.1);
   // border-top: solid #eeeeee4d s(0.1);
+
   overflow-x: hidden;
   position: relative;
   display: flex;
   overflow-y: hidden;
-  height: 100vh;
+  height: 120vh;
   margin-bottom: s(10);
   gap: s(20);
   justify-content: space-between;
@@ -430,7 +443,7 @@ main{
     flex-direction: column-reverse;
   }
   .services {
-    height: 120vh;
+    height: auto;
     padding-top: 0;
     .image{
       margin-top: s(5);
