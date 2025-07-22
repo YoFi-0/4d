@@ -242,6 +242,16 @@ main{
     cursor: pointer;
     font-size: s(2);
     transition: 0.3s;
+    width: s(5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: s(5);
+    img{
+      width: 100%;
+      height: 100%;
+    
+    }
 
     &:hover {
       background: $buttonBackgroundRev;

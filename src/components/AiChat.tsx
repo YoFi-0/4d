@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { n8n_client } from "../functions/n8nClient";
+import mainLogo from "../assets/mainlogo.png";
 import type { Lang, AiChatTranslations } from "../App.tsx";
 
 interface AiChatProps {
@@ -79,7 +80,7 @@ export function AiChat({ lang, t }: AiChatProps) {
   return (
     <div className="ai-chat-container">
       <div className="chat-toggle-button" onClick={() => setOpen(!open)}>
-        🤖
+        <img src={mainLogo} />
       </div>
 
       {open && (

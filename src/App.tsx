@@ -63,7 +63,7 @@ const translations: Translations = {
       "Hosting Websites",
     ],
     aiChat: {
-      header: "Fordzain Client",
+      header: "Ai Bot",
       inputPlaceholder: "Type what you need...",
       typingMessages: ["Just a second", "Hold on", "One moment"],
       thankYouMessage: "Thank you for choosing Fordzain, we will contact you soon, God willing.",
